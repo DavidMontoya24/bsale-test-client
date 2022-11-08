@@ -1,0 +1,31 @@
+:root {
+  --primary-100: #FFD6C4;
+  --primary-200: #FBA985;
+  --primary-300: #FF824A;
+  --primary-400: #EF6A37;
+  --primary-500: #C54D1F;
+  --primary-600: #822A08;
+  --secondary-300: #1CA0EC;
+  --gray-100: #f2f2f2;
+  --gray-200: #d3d3d3;
+  --gray-300: #7a7a7a;
+  --gray-400: #303036;
+  --gray-500: #17171c;
+  --error-100: #ea6c83;
+  --error-200: #e54865;
+  --error-300: #e02447;
+  --error-400: #c51c3b;
+  --error-500: #a11730;
+
+  --shadow-xs: 0px 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0px 1px 3px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0px 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0px 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0px 10px 15px -3px rgba(0, 0, 0, 0.1),
+    0px 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0px 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0px 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+  --shadow-input-primary: 0px 0px 4px var(--primary-300);
+  --shadow-input-error: 0px 0px 4px var(--error-500);
+}

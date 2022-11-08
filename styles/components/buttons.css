@@ -1,0 +1,36 @@
+.btn {
+  height: 2rem;
+  padding: 1.5rem;
+  border: none;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: var(--primary-400);
+  color: var(--gray-100);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-500);
+}
+
+
+.btn-secondary {
+  background-color: var(--gray-100);
+  color: var(--primary-400);
+}
+
+.btn-secondary:hover {
+  background-color: var(--gray-200);
+  color: var(--primary-600);
+}
+
+.btn-pagination {
+  background-color: var(--secondary-300);
+  color: var(--gray-100);
+}
