@@ -36,7 +36,28 @@ const renderHomePage = () => {
   `;
 };
 
-const filterEvent = () => {
+const searchSubmitEvent = () => {
+  const searchForm = document.querySelector(".js-search-form");
+  searchForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const value = e.target.elements.search.value.toLowerCase();
+    await productsProvider.fetchProductsByQuery(value);
+    DomBuilder("#root").load(homePage);
+  });
+};
+
+const resetEvent = () => {
+  const reset = document.querySelector(".js-reset");
+  reset.addEventListener("click", async (e) => {
+    e.preventDefault();
+    ctgriesProvider.currentCategory = null;
+    productsProvider.querySearch = "";
+    await productsProvider.fecthProducts();
+    DomBuilder("#root").load(homePage);
+  });
+};
+
+const filterByCtgryEvent = () => {
   const filters = document.querySelector(".categories_wrapper");
 
   for (let elem of filters.children) {
@@ -52,22 +73,6 @@ const filterEvent = () => {
       DomBuilder("#root").load(homePage);
     });
   }
-
-  // filters.addEventListener("click", (e) => {
-  //   e.preventDefault();
-  //   console.log(e.target);
-  //   const ctgryId = e.target.dataset.id;
-
-  //   // if (!ctgryId) return;
-
-  //   // productsProvider.status = "loading";
-  //   // DomBuilder.reload();
-
-  //   // ctgriesProvider.currentCategory = ctgryId;
-  //   // productsProvider.fetchProductsByCtgry();
-
-  //   // DomBuilder("#root").load(homePage);
-  // });
 };
 
 export const homePage = {
@@ -76,6 +81,8 @@ export const homePage = {
   },
   addListeners() {
     paginationEvent();
-    filterEvent();
+    filterByCtgryEvent();
+    searchSubmitEvent();
+    resetEvent();
   },
 };
