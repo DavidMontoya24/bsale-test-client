@@ -1,4 +1,4 @@
-import DomBuilder from "../scripts/dombuilder";
+import DomBuilder from "../scripts/dombuilder.js";
 
 const renderHomePage = () => {
   return `
