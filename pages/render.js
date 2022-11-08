@@ -1,35 +1,49 @@
 import { priceTransformer } from "../scripts/utils.js";
 import { productsProvider } from "../scripts/context.js";
+import Loader from "../components/loader.js";
 
 // Function that renders a card product
-const renderProduct = (product) => {
+const renderProduct = (product, status) => {
   return `
   <li class="product_card flex flex-column">
-  <div class="product_image">
-  ${
-    product.url_image
-      ? `<img src=${product.url_image} alt="image_card"/>`
-      : `<i class='bx bxs-image-alt bx-lg' style='color:#b5b5b5'></i><div><p>Image not found</p></div>`
-  }
-  ${
-    product.discount === 0
-      ? ""
-      : `
-    <div class="blob_price">
-    <h3>${product.discount}</h3>
-    <div class="blob_price_content">
-    <h4>%</h4>
-    <p>OFF</p>
+    <div class="product_image">
+      ${status === "loading" ? Loader() : ""}
+      ${
+        status === "success"
+          ? `
+        ${
+          product.url_image
+            ? `<img src=${product.url_image} alt="image_card"/>`
+            : `<i class='bx bxs-image-alt bx-lg' style='color:#b5b5b5'></i><div><p>Image not found</p></div>`
+        }
+        ${
+          product.discount === 0
+            ? ""
+            : `
+          <div class="blob_price">
+            <h3>${product.discount}</h3>
+            <div class="blob_price_content">
+              <h4>%</h4>
+              <p>OFF</p>
+            </div>
+          </div>
+          `
+        }
+      `
+          : ""
+      }
     </div>
-    </div>
+    ${
+      status === "success"
+        ? `
+      <div class="product_desc">
+        <div class="product_price">${priceTransformer(product.price)}</div>
+        <div class="product_name">${product.name.toUpperCase()}</div>
+      </div>
     `
-  }
-  </div>
-  <div class="product_desc">
-  <div class="product_price">${priceTransformer(product.price)}</div>
-    <div class="product_name">${product.name.toUpperCase()}</div>
-    </div>
-    </li>
+        : ""
+    }
+  </li>
     `;
 };
 
@@ -51,8 +65,9 @@ const displayProducts = (list, wrapper, rows, page) => {
   if (paginatedItems.length === 0) {
     wrapper.innerHTML = `<div class="flex items-center justify-center"><h3 style="color: var(--gray-200); font-size: 3rem">No results found. Try again</h3></div>`;
   } else {
+    const { status } = productsProvider;
     wrapper.innerHTML = paginatedItems
-      .map((elm) => renderProduct(elm))
+      .map((elm) => renderProduct(elm, status))
       .join("");
   }
 };

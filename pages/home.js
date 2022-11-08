@@ -3,6 +3,7 @@ import { ctgriesProvider, productsProvider } from "../scripts/context.js";
 import DomBuilder from "../scripts/dombuilder.js";
 import { renderCategory, paginationEvent } from "./render.js";
 
+// Function that renders and display the Home Page
 const renderHomePage = () => {
   const { products } = productsProvider;
   const { categories } = ctgriesProvider;
@@ -35,11 +36,46 @@ const renderHomePage = () => {
   `;
 };
 
+const filterEvent = () => {
+  const filters = document.querySelector(".categories_wrapper");
+
+  for (let elem of filters.children) {
+    elem.addEventListener("click", async (e) => {
+      e.preventDefault();
+      const ctgryId = e.target.dataset.id;
+
+      productsProvider.status = "loading";
+      DomBuilder("#root").load(homePage);
+
+      ctgriesProvider.currentCategory = ctgryId;
+      await productsProvider.fetchProductsByCtgry();
+      DomBuilder("#root").load(homePage);
+    });
+  }
+
+  // filters.addEventListener("click", (e) => {
+  //   e.preventDefault();
+  //   console.log(e.target);
+  //   const ctgryId = e.target.dataset.id;
+
+  //   // if (!ctgryId) return;
+
+  //   // productsProvider.status = "loading";
+  //   // DomBuilder.reload();
+
+  //   // ctgriesProvider.currentCategory = ctgryId;
+  //   // productsProvider.fetchProductsByCtgry();
+
+  //   // DomBuilder("#root").load(homePage);
+  // });
+};
+
 export const homePage = {
   toString() {
     return renderHomePage();
   },
   addListeners() {
     paginationEvent();
+    filterEvent();
   },
 };
