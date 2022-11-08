@@ -1,4 +1,4 @@
-import headerBar from "../components/header-bar.js";
+import { headerBar } from "../components/header-bar.js";
 import { ctgriesProvider, productsProvider } from "../scripts/context.js";
 import DomBuilder from "../scripts/dombuilder.js";
 import { renderCategory, paginationEvent } from "./render.js";
@@ -10,7 +10,7 @@ const renderHomePage = () => {
 
   return `
   <section class="container-xl">
-    ${headerBar()}
+    ${headerBar}
     <div>
       <p class="mb-4">Results: <strong>${
         products.length
@@ -75,6 +75,14 @@ const filterByCtgryEvent = () => {
   }
 };
 
+const ShowFilters = () => {
+  const btn = document.querySelector(".filter-btn");
+  const filterBox = document.querySelector(".filter-section");
+  btn.addEventListener("click", () => {
+    filterBox.classList.toggle("active");
+  });
+};
+
 export const homePage = {
   toString() {
     return renderHomePage();
@@ -84,5 +92,6 @@ export const homePage = {
     filterByCtgryEvent();
     searchSubmitEvent();
     resetEvent();
+    ShowFilters();
   },
 };
