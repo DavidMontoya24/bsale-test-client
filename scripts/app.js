@@ -7,8 +7,8 @@ const runApp = async () => {
   try {
     // await Data.fetchCategories();
     // await Data.fetchProducts();
-    await ctgriesProvider.fetchCategories();
     await productsProvider.fecthProducts();
+    await ctgriesProvider.fetchCategories();
     DomBuilder("#root").load(homePage);
   } catch (error) {
     console.log(error);
