@@ -1,7 +1,7 @@
 import headerBar from "../components/header-bar.js";
 import { ctgriesProvider, productsProvider } from "../scripts/context.js";
 import DomBuilder from "../scripts/dombuilder.js";
-import { renderCategory } from "./render.js";
+import { renderCategory, paginationEvent } from "./render.js";
 
 const renderHomePage = () => {
   const { products } = productsProvider;
@@ -39,5 +39,7 @@ export const homePage = {
   toString() {
     return renderHomePage();
   },
-  addListeners() {},
+  addListeners() {
+    paginationEvent();
+  },
 };
