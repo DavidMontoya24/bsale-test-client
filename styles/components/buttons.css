@@ -16,9 +16,17 @@
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-500);
+  background-color: var(--primary-400);
 }
 
+.btn-primary-darker {
+  background-color: var(--primary-500);
+  color: var(--gray-100);
+}
+
+.btn-primary-darker:hover {
+  background-color: var(--primary-600);
+}
 
 .btn-secondary {
   background-color: var(--secondary-300);
@@ -26,8 +34,8 @@
 }
 
 .btn-secondary:hover {
-  background-color: var(--gray-200);
-  color: var(--primary-600);
+  background-color: var(--secondary-400);
+  color: var(--gray-100);
 }
 
 .btn-pagination {

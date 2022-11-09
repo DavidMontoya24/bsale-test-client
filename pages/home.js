@@ -9,8 +9,8 @@ const renderHomePage = () => {
   const { categories } = ctgriesProvider;
 
   return `
+  ${headerBar}
   <section class="container-xl">
-    ${headerBar}
     <div>
       <p class="mb-4">Results: <strong>${
         products.length
