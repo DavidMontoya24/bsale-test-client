@@ -42,7 +42,7 @@ async function fetchProductsByQuery(query) {
 
 const productsProvider = {
   products: [],
-  status: "idle",
+  status: "pending",
   querySearch: "",
   fecthProducts,
   fetchProductsByCtgry,

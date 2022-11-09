@@ -1,4 +1,4 @@
-import { LogoBsale } from "../styles/assets/icons.js";
+import { LogoBsale } from "../assets/icons.js";
 
 /**
  * It renders the header bar of the app
