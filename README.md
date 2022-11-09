@@ -195,13 +195,11 @@ This is a sort of a Redux strategy, but in a Vanilla Javascript mode that will h
 
 ## Demo
 
-### Responsive Design
-
-- Desktop version
+### Desktop version
   <img src="./assets/bsale-01.png" width="300">
 
-- Mobile version
+### Mobile version
   <img src="./assets/bsale-02.png" height="500">
 
-- Display category list by clicking on the filter button
+### Display category list by clicking on the filter button
   <img src="./assets/bsale-03.png" height="400">
