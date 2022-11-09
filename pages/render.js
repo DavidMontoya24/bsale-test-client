@@ -14,7 +14,7 @@ const renderProduct = (product, status) => {
         ${
           product.url_image
             ? `<img src=${product.url_image} alt="image_card"/>`
-            : `<i class='bx bxs-image-alt bx-lg' style='color:#b5b5b5'></i><div><p>Image not found</p></div>`
+            : `<i class='bx bxs-image-alt bx-lg' style='color:#b5b5b5'></i><div><p>Image coming soon</p></div>`
         }
         ${
           product.discount === 0
@@ -58,7 +58,6 @@ const renderCategory = (category) => {
 
 // Function that displays product in DOM
 const displayProducts = (list, wrapper, rows, page) => {
-  console.log(list);
   page--;
   let start = rows * page,
     end = start + rows;

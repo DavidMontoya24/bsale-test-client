@@ -11,28 +11,29 @@ const renderHomePage = () => {
   return `
   ${headerBar}
   <section class="container-xl">
-    <div class="options flex">
-      <p class="mb-4">Results: <strong>${
-        products.length
-      } products found</strong></p>
+    <div class="options-container">
+      <p>Results: <strong>${products.length} products found</strong></p>
 
       <div>
-        <label for="sortby-name">Sort by:</label>
-        <select name="sortby" id="sortby-name">
-          <option disabled selected="selected">Select an option</option>
-          <option value="desc">A-Z</option>
-          <option value="asc">Z-A</option>
-        </select>
+        <label for="sortby-price">Sort by Price:
+          <select name="sortby" id="sortby-price">
+            <option disabled selected>Select an option</option>
+            <option value="desc">Highest</option>
+            <option value="asc">Lowest</option>
+          </select>
+        </label>
       </div>
-      
+
       <div>
-        <label for="sortby-price">Sort by:</label>
-        <select name="sortby" id="sortby-price">
-          <option disabled selected="selected">Select an option</option>
-          <option value="desc">Highest</option>
-          <option value="asc">Lowest</option>
-        </select>
+        <label for="sortby-name">Sort by Name:
+          <select name="sortby" id="sortby-name">
+            <option disabled selected="selected">Select an option</option>
+            <option value="desc">A-Z</option>
+            <option value="asc">Z-A</option>
+          </select>
+        </label>
       </div>
+
 
     </div>
     <section class="products-section">
@@ -121,36 +122,41 @@ const ShowFilters = () => {
  * It listens for a change in the select element, then it sorts the products array based on the selected value
  */
 const SortBy = () => {
+  //Sort By Price
+  const selectPrice = document.getElementById("sortby-price");
+  selectPrice.addEventListener("change", async () => {
+    const value = selectPrice.value;
+    if (value === "desc") {
+      productsProvider.products.sort((a, b) => b.price - a.price);
+      DomBuilder("#root").load(homePage);
+      const selectPrice = document.getElementById("sortby-price");
+      selectPrice.options[1].setAttribute("selected", "selected");
+    }
+    if (value === "asc") {
+      productsProvider.products.sort((a, b) => a.price - b.price);
+      DomBuilder("#root").load(homePage);
+      const selectPrice = document.getElementById("sortby-price");
+      selectPrice.options[2].setAttribute("selected", "selected");
+    }
+  });
+
   // Sorty by Name
   const selectName = document.getElementById("sortby-name");
   selectName.addEventListener("change", () => {
-    // console.dir(selectName);
     const index = selectName.selectedIndex;
     if (index === -1) return;
     const value = selectName.options[index].value;
     if (value === "desc") {
       productsProvider.products.sort((a, b) => a.name.localeCompare(b.name));
       DomBuilder("#root").load(homePage);
+      const selectName = document.getElementById("sortby-name");
+      selectName.options[1].setAttribute("selected", "selected");
     }
     if (value === "asc") {
       productsProvider.products.sort((a, b) => b.name.localeCompare(a.name));
       DomBuilder("#root").load(homePage);
-    }
-  });
-
-  //Sort By Price
-  const selectPrice = document.getElementById("sortby-price");
-  selectPrice.addEventListener("change", () => {
-    const index = selectPrice.selectedIndex;
-    if (index === -1) return;
-    const value = selectPrice.options[index].value;
-    if (value === "asc") {
-      productsProvider.products.sort((a, b) => a.price - b.price);
-      DomBuilder("#root").load(homePage);
-    }
-    if (value === "desc") {
-      productsProvider.products.sort((a, b) => b.price - a.price);
-      DomBuilder("#root").load(homePage);
+      const selectName = document.getElementById("sortby-name");
+      selectName.options[2].setAttribute("selected", "selected");
     }
   });
 };
