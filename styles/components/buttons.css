@@ -21,8 +21,8 @@
 
 
 .btn-secondary {
-  background-color: var(--gray-100);
-  color: var(--primary-400);
+  background-color: var(--secondary-300);
+  color: var(--gray-100);
 }
 
 .btn-secondary:hover {

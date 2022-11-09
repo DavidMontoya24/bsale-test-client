@@ -1,12 +1,13 @@
 import { homePage } from "../pages/home.js";
-// import { Data } from "../services/products-services.js";
 import { ctgriesProvider, productsProvider } from "./context.js";
 import DomBuilder from "./dombuilder.js";
 
+/**
+ * Setting our main prgram initialization
+ * It fetches the products and categories from the API, then loads the home page
+ */
 const runApp = async () => {
   try {
-    // await Data.fetchCategories();
-    // await Data.fetchProducts();
     await productsProvider.fecthProducts();
     await ctgriesProvider.fetchCategories();
     DomBuilder("#root").load(homePage);

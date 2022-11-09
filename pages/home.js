@@ -36,6 +36,10 @@ const renderHomePage = () => {
   `;
 };
 
+/**
+ * When the search form is submitted, prevent the default action, get the value of the search input,
+ * fetch the products that match the search query, and load the home page
+ */
 const searchSubmitEvent = () => {
   const searchForm = document.querySelector(".js-search-form");
   searchForm.addEventListener("submit", async (e) => {
@@ -46,28 +50,35 @@ const searchSubmitEvent = () => {
   });
 };
 
+/**
+ * It adds an event listener to all elements with the class "js-reset" and when clicked, it resets the
+ * current category and the query search to null and then fetches the products and loads the home page
+ */
 const resetEvent = () => {
-  const reset = document.querySelector(".js-reset");
-  reset.addEventListener("click", async (e) => {
-    e.preventDefault();
-    ctgriesProvider.currentCategory = null;
-    productsProvider.querySearch = "";
-    await productsProvider.fecthProducts();
-    DomBuilder("#root").load(homePage);
-  });
+  const reset = document.querySelectorAll(".js-reset");
+  for (let elem of reset) {
+    elem.addEventListener("click", async (e) => {
+      e.preventDefault();
+      ctgriesProvider.currentCategory = null;
+      productsProvider.querySearch = "";
+      await productsProvider.fecthProducts();
+      DomBuilder("#root").load(homePage);
+    });
+  }
 };
 
+/**
+ * It adds an event listener to each category filter, and when clicked, it fetches the products of that
+ * category and renders them on the page
+ */
 const filterByCtgryEvent = () => {
   const filters = document.querySelector(".categories_wrapper");
-
   for (let elem of filters.children) {
     elem.addEventListener("click", async (e) => {
       e.preventDefault();
       const ctgryId = e.target.dataset.id;
-
       productsProvider.status = "loading";
       DomBuilder("#root").load(homePage);
-
       ctgriesProvider.currentCategory = ctgryId;
       await productsProvider.fetchProductsByCtgry();
       DomBuilder("#root").load(homePage);
@@ -75,6 +86,10 @@ const filterByCtgryEvent = () => {
   }
 };
 
+/**
+ * a function that toggles the class of the filter-section element to active when the
+ * filter-btn element is clicked
+ */
 const ShowFilters = () => {
   const btn = document.querySelector(".filter-btn");
   const filterBox = document.querySelector(".filter-section");
