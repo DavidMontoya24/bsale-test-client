@@ -58,6 +58,7 @@ const renderCategory = (category) => {
 
 // Function that displays product in DOM
 const displayProducts = (list, wrapper, rows, page) => {
+  console.log(list);
   page--;
   let start = rows * page,
     end = start + rows;

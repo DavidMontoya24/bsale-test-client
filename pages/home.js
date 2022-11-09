@@ -11,10 +11,29 @@ const renderHomePage = () => {
   return `
   ${headerBar}
   <section class="container-xl">
-    <div>
+    <div class="options flex">
       <p class="mb-4">Results: <strong>${
         products.length
       } products found</strong></p>
+
+      <div>
+        <label for="sortby-name">Sort by:</label>
+        <select name="sortby" id="sortby-name">
+          <option disabled selected="selected">Select an option</option>
+          <option value="desc">A-Z</option>
+          <option value="asc">Z-A</option>
+        </select>
+      </div>
+      
+      <div>
+        <label for="sortby-price">Sort by:</label>
+        <select name="sortby" id="sortby-price">
+          <option disabled selected="selected">Select an option</option>
+          <option value="desc">Highest</option>
+          <option value="asc">Lowest</option>
+        </select>
+      </div>
+
     </div>
     <section class="products-section">
       <div class="filter-section">
@@ -98,6 +117,44 @@ const ShowFilters = () => {
   });
 };
 
+/**
+ * It listens for a change in the select element, then it sorts the products array based on the selected value
+ */
+const SortBy = () => {
+  // Sorty by Name
+  const selectName = document.getElementById("sortby-name");
+  selectName.addEventListener("change", () => {
+    // console.dir(selectName);
+    const index = selectName.selectedIndex;
+    if (index === -1) return;
+    const value = selectName.options[index].value;
+    if (value === "desc") {
+      productsProvider.products.sort((a, b) => a.name.localeCompare(b.name));
+      DomBuilder("#root").load(homePage);
+    }
+    if (value === "asc") {
+      productsProvider.products.sort((a, b) => b.name.localeCompare(a.name));
+      DomBuilder("#root").load(homePage);
+    }
+  });
+
+  //Sort By Price
+  const selectPrice = document.getElementById("sortby-price");
+  selectPrice.addEventListener("change", () => {
+    const index = selectPrice.selectedIndex;
+    if (index === -1) return;
+    const value = selectPrice.options[index].value;
+    if (value === "asc") {
+      productsProvider.products.sort((a, b) => a.price - b.price);
+      DomBuilder("#root").load(homePage);
+    }
+    if (value === "desc") {
+      productsProvider.products.sort((a, b) => b.price - a.price);
+      DomBuilder("#root").load(homePage);
+    }
+  });
+};
+
 export const homePage = {
   toString() {
     return renderHomePage();
@@ -108,5 +165,6 @@ export const homePage = {
     searchSubmitEvent();
     resetEvent();
     ShowFilters();
+    SortBy();
   },
 };
