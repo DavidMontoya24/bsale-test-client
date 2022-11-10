@@ -1,5 +1,5 @@
 import { priceTransformer } from "../scripts/utils.js";
-import { productsProvider } from "../scripts/context.js";
+import { ctgriesProvider, productsProvider } from "../scripts/context.js";
 
 // Function that renders a card product
 const renderProduct = (product, status) => {
@@ -49,10 +49,11 @@ const renderProduct = (product, status) => {
 
 // Function that renders a category button
 const renderCategory = (category) => {
+  const currentCtgry = ctgriesProvider.currentCategory;
   return `
-  <button class="btn btn-primary" data-id=${
-    category.id
-  }> ${category.name.toUpperCase()} </button>
+  <button class="btn btn-category ${
+    +category.id === +currentCtgry ? "activeCtgry" : ""
+  }" data-id=${category.id}> ${category.name.toUpperCase()} </button>
   `;
 };
 

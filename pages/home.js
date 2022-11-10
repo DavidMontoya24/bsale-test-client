@@ -103,13 +103,24 @@ const filterByCtgryEvent = () => {
   const filters = document.querySelector(".categories_wrapper");
   for (let elem of filters.children) {
     elem.addEventListener("click", async (e) => {
-      e.preventDefault();
       const ctgryId = e.target.dataset.id;
       productsProvider.status = "loading";
       DomBuilder("#root").load(homePage);
+
       ctgriesProvider.currentCategory = ctgryId;
       await productsProvider.fetchProductsByCtgry();
       DomBuilder("#root").load(homePage);
+    });
+  }
+};
+
+const asasa = () => {
+  const filters = document.querySelector(".categories_wrapper");
+  for (let elem of filters.children) {
+    elem.addEventListener("click", (e) => {
+      // console.log(e.target.classList);
+      // e.target.classList.add("activeCtgry");
+      // DomBuilder("#root").load(homePage);
     });
   }
 };
@@ -180,5 +191,6 @@ export const homePage = {
     resetEvent();
     ShowFilters();
     SortBy();
+    asasa();
   },
 };
