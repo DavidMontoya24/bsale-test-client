@@ -2,6 +2,7 @@ import { headerBar } from "../components/header-bar.js";
 import { ctgriesProvider, productsProvider } from "../scripts/context.js";
 import DomBuilder from "../scripts/dombuilder.js";
 import { renderCategory, paginationEvent } from "./render.js";
+import Loader from "../components/loader.js";
 
 // Function that renders and display the Home Page
 const renderHomePage = () => {
@@ -64,6 +65,13 @@ const searchSubmitEvent = () => {
   const searchForm = document.querySelector(".js-search-form");
   searchForm.addEventListener("submit", async (e) => {
     e.preventDefault();
+    //Adding loader on the header
+    const headerWrapper = document.querySelector(".header-wrapper");
+    const loadingBar = document.createElement("div");
+    loadingBar.innerHTML = `${Loader()}`;
+    headerWrapper.prepend(loadingBar);
+
+    //Submitting the search
     const value = e.target.elements.search.value.toLowerCase();
     await productsProvider.fetchProductsByQuery(value);
     DomBuilder("#root").load(homePage);

@@ -1,4 +1,5 @@
 import { LogoBsale } from "../assets/icons.js";
+import Loader from "./loader.js";
 
 /**
  * It renders the header bar of the app
@@ -7,7 +8,7 @@ import { LogoBsale } from "../assets/icons.js";
 function renderHeaderBar() {
   return `
   <header class="header-wrapper">
-    <div class="container-xl">
+    <div class="container-lg">
       <div class="header">
         <div class="js-reset">
           ${LogoBsale}

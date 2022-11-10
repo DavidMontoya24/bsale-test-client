@@ -1,6 +1,6 @@
 const Loader = () => {
   return `
-    <div class="lds-dual-ring"></div>
+    <div id="loadingBar" class="bar-wrapper"><div class="bar-growing"></div></div>
   `;
 };
 
