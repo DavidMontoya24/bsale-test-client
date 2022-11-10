@@ -23,7 +23,7 @@ async function getProductsByCtgry(ctgryId) {
  * @returns A promise
  */
 async function getProductsByQuery(query) {
-  return await fetchAPI("products/" + query);
+  return await fetchAPI("products/search/name=" + query);
 }
 
 export { getProducts, getProductsByCtgry, getProductsByQuery };
