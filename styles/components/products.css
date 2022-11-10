@@ -319,15 +319,19 @@ option {
     position: absolute;
     border-radius: 2rem 0 0 2rem;
     z-index: 10;
-    min-height: 100%;
-    min-width: auto;
     right: -300px;
     top: 0;
-    transition: .4s;
-  }
 
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility .4s, opacity 0.1s linear;
+  }
+  
   .filter-section.active {
     right: 0;
+
+    opacity: 1;
+    visibility: visible;
   }
 
   .product_wrapper{

@@ -114,17 +114,6 @@ const filterByCtgryEvent = () => {
   }
 };
 
-const asasa = () => {
-  const filters = document.querySelector(".categories_wrapper");
-  for (let elem of filters.children) {
-    elem.addEventListener("click", (e) => {
-      // console.log(e.target.classList);
-      // e.target.classList.add("activeCtgry");
-      // DomBuilder("#root").load(homePage);
-    });
-  }
-};
-
 /**
  * a function that toggles the class of the filter-section element to active when the
  * filter-btn element is clicked
@@ -191,6 +180,5 @@ export const homePage = {
     resetEvent();
     ShowFilters();
     SortBy();
-    asasa();
   },
 };
