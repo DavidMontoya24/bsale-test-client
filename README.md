@@ -36,7 +36,7 @@ or With the [API - Backend](https://github.com/DavidMontoya24/bsale-test-api) re
 const URI = 'http://localhost:8080/';
 ```
 
-## Builidng the app
+## Building the app
 #### Create the html index page
 We create our html page for our single web page application, notice we have a ``<main id="root"></main>``  this will be the element that we going to target to create all our application
 and we have to create our ``<script type="module" src="index.js"></script>`` as well
