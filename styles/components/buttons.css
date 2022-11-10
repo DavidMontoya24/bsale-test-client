@@ -2,7 +2,7 @@
   height: 2rem;
   padding: 1.5rem;
   border: none;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +16,7 @@
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-400);
+  background-color: var(--primary-500);
 }
 
 .btn-primary-darker {
@@ -41,4 +41,9 @@
 .btn-pagination {
   background-color: var(--secondary-300);
   color: var(--gray-100);
+}
+
+.btn:hover{
+  transform: scale(1.05);
+  transition: transform 500ms;
 }

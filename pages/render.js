@@ -1,13 +1,12 @@
 import { priceTransformer } from "../scripts/utils.js";
 import { productsProvider } from "../scripts/context.js";
-import Loader from "../components/loader.js";
 
 // Function that renders a card product
 const renderProduct = (product, status) => {
   return `
   <li class="product_card flex flex-column">
     <div class="product_image">
-      ${status === "loading" ? Loader() : ""}
+      ${status === "loading" ? `<div class="skeleton-image"></div>` : ""}
       ${
         status === "success"
           ? `
@@ -33,16 +32,17 @@ const renderProduct = (product, status) => {
           : ""
       }
     </div>
-    ${
-      status === "success"
-        ? `
-      <div class="product_desc">
+    <div class="product_desc">
+      ${status === "loading" ? `<div class="skeleton-desc"></div>` : ""}
+      ${
+        status === "success"
+          ? `
         <div class="product_price">${priceTransformer(product.price)}</div>
         <div class="product_name">${product.name.toUpperCase()}</div>
-      </div>
-    `
-        : ""
-    }
+        `
+          : ""
+      }
+    </div>
   </li>
     `;
 };

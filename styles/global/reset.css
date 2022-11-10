@@ -82,3 +82,9 @@ input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition: background-color 600000s 0s, color 600000s 0s;
 }
+
+#root {
+  background-color: #ffffff;
+  background-image: radial-gradient(#f0f0f0 1.7px, #ffffff 1.7px);
+  background-size: 30px 30px;
+}
