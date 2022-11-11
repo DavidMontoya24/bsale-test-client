@@ -1,12 +1,19 @@
+import DomBuilder from "../scripts/dombuilder.js";
+import Loader from "../components/loader.js";
 import { headerBar } from "../components/header-bar.js";
 import { ctgriesProvider, productsProvider } from "../scripts/context.js";
-import DomBuilder from "../scripts/dombuilder.js";
-import { renderCategory, paginationEvent } from "./render.js";
-import Loader from "../components/loader.js";
+import {
+  renderCategory,
+  renderProduct,
+  displayProducts,
+  showPagination,
+  isInCart,
+} from "./render.js";
+import { addToCart, showCart } from "../components/cart.js";
 
 // Function that renders and display the Home Page
 const renderHomePage = () => {
-  const { products } = productsProvider;
+  const { products, status, currPage } = productsProvider;
   const { categories } = ctgriesProvider;
 
   return `
@@ -35,6 +42,7 @@ const renderHomePage = () => {
         </label>
       </div>
 
+      <div><button class="btn btn-secondary show-cart">Go to Cart<i class='bx bxs-cart bx-sm'></i></button></div>
 
     </div>
     <section class="products-section">
@@ -47,7 +55,15 @@ const renderHomePage = () => {
         ${categories.map((elm) => renderCategory(elm)).join("")}
         </ul>
       </div>
-      <ul class="product_wrapper flex wrap"></ul>
+      <ul class="product_wrapper flex wrap">
+        ${
+          products.length !== 0
+            ? displayProducts(products, 9, currPage)
+                .map((elm) => renderProduct(elm, status, isInCart(elm)))
+                .join("")
+            : `<div class="flex items-center justify-center"><h3 style="color: var(--gray-200); font-size: 3rem">No results found. Try again</h3></div>`
+        }
+      </ul>
     </section>
     <div class="pagination_wrapper flex">
       <button class="btn btn-primary js-btn-next"><i class='bx bxs-chevron-left'></i></button>
@@ -89,6 +105,7 @@ const resetEvent = () => {
       e.preventDefault();
       ctgriesProvider.currentCategory = null;
       productsProvider.querySearch = "";
+      productsProvider.currPage = 1;
       await productsProvider.fecthProducts();
       DomBuilder("#root").load(homePage);
     });
@@ -108,6 +125,7 @@ const filterByCtgryEvent = () => {
       DomBuilder("#root").load(homePage);
 
       ctgriesProvider.currentCategory = ctgryId;
+      productsProvider.currPage = 1;
       await productsProvider.fetchProductsByCtgry();
       DomBuilder("#root").load(homePage);
     });
@@ -174,11 +192,13 @@ export const homePage = {
     return renderHomePage();
   },
   addListeners() {
-    paginationEvent();
     filterByCtgryEvent();
     searchSubmitEvent();
     resetEvent();
     ShowFilters();
     SortBy();
+    addToCart();
+    showCart();
+    showPagination();
   },
 };

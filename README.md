@@ -22,6 +22,7 @@ vanilla JavaScript that consumes data from the [API - Backend](https://github.co
 - Use the filters by category section to show products by category
 - Use the sort by select to list products by name or price
 - On mobile version display the categories list by click in the filter icon
+- Can add products to a shop cart handled by localStorage
 - When click on the logo reset all the products
 
 ## Run Locally

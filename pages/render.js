@@ -1,15 +1,18 @@
 import { priceTransformer } from "../scripts/utils.js";
 import { ctgriesProvider, productsProvider } from "../scripts/context.js";
+import DomBuilder from "../scripts/dombuilder.js";
+import { homePage } from "./home.js";
 
 // Function that renders a card product
-const renderProduct = (product, status) => {
+const renderProduct = (product, status, inCart) => {
   return `
-  <li class="product_card flex flex-column">
-    <div class="product_image">
+  <li class="product_card flex flex-column" id=${product.id}>
+    <div class="product_image" >
       ${status === "loading" ? `<div class="skeleton-image"></div>` : ""}
       ${
         status === "success"
           ? `
+          <i class='bx bxs-cart bx-md cart-icon ${inCart ? "active" : ""}'></i>
         ${
           product.url_image
             ? `<img src=${product.url_image} alt="image_card"/>`
@@ -58,37 +61,35 @@ const renderCategory = (category) => {
 };
 
 // Function that displays product in DOM
-const displayProducts = (list, wrapper, rows, page) => {
+const displayProducts = (list, rows, page) => {
   page--;
   let start = rows * page,
     end = start + rows;
   let paginatedItems = list.slice(start, end);
-  if (paginatedItems.length === 0) {
-    wrapper.innerHTML = `<div class="flex items-center justify-center"><h3 style="color: var(--gray-200); font-size: 3rem">No results found. Try again</h3></div>`;
-  } else {
-    const { status } = productsProvider;
-    wrapper.innerHTML = paginatedItems
-      .map((elm) => renderProduct(elm, status))
-      .join("");
-  }
+  return paginatedItems;
 };
 
-// Function that handle the pagination
-const paginationEvent = () => {
-  let rows = 9,
-    page = 1;
-  const productWrapper = document.querySelector(".product_wrapper");
+/**
+ * It takes the products array from the productsProvider and divides it by the number of rows in the
+ * table. Then it creates a button for each page and adds an event listener to each button.
+ * When the button is clicked, the current page is set to the value of the button and the home page is
+ * reloaded
+ */
+const showPagination = () => {
+  const pagWrap = document.querySelector(".pagination_wrapper");
   const products = productsProvider.products;
+  const rows = 9;
+
+  // Quantity of buttons
   const quant =
     (Math.trunc(products.length / rows) - products.length / rows) * -1 >= 0.5
       ? Math.round(products.length / rows)
       : Math.round(products.length / rows) + 1;
-
-  const pagWrap = document.querySelector(".pagination_wrapper");
   let arrBtns = [];
   for (let i = 1; i <= quant; i++) {
     arrBtns.push(i);
   }
+  // Rendering the buttons of showPagination
   pagWrap.innerHTML = arrBtns
     .map((elm) => `<button class="btn btn-primary">${elm}</button>`)
     .join("");
@@ -97,10 +98,25 @@ const paginationEvent = () => {
     pagWrap.children[i].setAttribute("value", +pagWrap.children[i].innerHTML);
     pagWrap.children[i].addEventListener("click", (e) => {
       const value = e.target.getAttribute("value");
-      displayProducts(products, productWrapper, rows, value);
+      productsProvider.currPage = value;
+      DomBuilder("#root").load(homePage);
     });
   }
-  displayProducts(products, productWrapper, rows, page);
 };
 
-export { renderProduct, renderCategory, paginationEvent };
+// Check if the product is already in cart
+const isInCart = (elm) => {
+  const incart = JSON.parse(localStorage.getItem("incart"));
+  let onCart;
+  if (incart) onCart = incart.find((e) => e.id === elm.id);
+  onCart = onCart ? true : false;
+  return onCart;
+};
+
+export {
+  renderProduct,
+  renderCategory,
+  displayProducts,
+  showPagination,
+  isInCart,
+};

@@ -42,6 +42,8 @@ async function fetchProductsByQuery(query) {
 
 const productsProvider = {
   products: [],
+  inCart: [],
+  currPage: 1,
   status: "pending",
   querySearch: "",
   fecthProducts,
