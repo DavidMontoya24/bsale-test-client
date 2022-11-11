@@ -1,41 +1,55 @@
 import { homePage } from "../pages/home.js";
-import { isInCart, renderProduct } from "../pages/render.js";
 import { productsProvider } from "../scripts/context.js";
 import DomBuilder from "../scripts/dombuilder.js";
 
 productsProvider.inCart = JSON.parse(localStorage.getItem("incart")) || [];
 
 /**
- * It adds an event listener to each of the icons in the products page, and when clicked, it checks if
- * the product is already in the cart, if not, it adds it to the cart, and if it is, it removes it from
- * the cart
+ * It adds the selected product to the cart array and removes it if it's already in the cart array
  */
 const addToCart = () => {
   const icons = document.querySelectorAll(".cart-icon");
+  const { cartPage, currPage } = productsProvider;
   productsProvider.products;
+  // Assign click event on every cart icon
   for (let elem of icons) {
     elem.addEventListener("click", () => {
       const id = +elem.parentElement.parentElement.id;
       const selectedProduct = productsProvider.products.find(
         (elem) => +elem.id === +id
       );
-      let inCart = productsProvider.inCart;
-      const matchedProduct = inCart.find(
+      // Searching if the selected product is already in the list
+      const matchedProduct = productsProvider.inCart.find(
         (elem) => +elem.id === +selectedProduct.id
       );
+      // The selected product is not in the cart array and we are adding it to the list
       if (!matchedProduct) {
         elem.classList.add("active");
         console.log("Adding to cart...");
         productsProvider.inCart.push(selectedProduct);
         localStorage.setItem("incart", JSON.stringify(productsProvider.inCart));
+        productsProvider.currPage = currPage;
         DomBuilder("#root").load(homePage);
-      } else {
-        elem.classList.remove("active");
+      }
+      // The selected is in the cart array and we are in the home page
+      else if (matchedProduct && !cartPage) {
         console.log("removing of cart...");
         productsProvider.inCart = productsProvider.inCart.filter((i) => {
           return +i.id !== +matchedProduct.id;
         });
         localStorage.setItem("incart", JSON.stringify(productsProvider.inCart));
+        productsProvider.currPage = currPage;
+        DomBuilder("#root").load(homePage);
+      }
+      // The selected is in the cart array and we are in the cart page
+      else if (matchedProduct && cartPage) {
+        console.log("in cart page removing of cart...");
+        productsProvider.inCart = productsProvider.inCart.filter((i) => {
+          return +i.id !== +matchedProduct.id;
+        });
+        localStorage.setItem("incart", JSON.stringify(productsProvider.inCart));
+        productsProvider.products = productsProvider.inCart;
+        productsProvider.currPage = currPage;
         DomBuilder("#root").load(homePage);
       }
     });
@@ -49,27 +63,47 @@ const addToCart = () => {
  * button has the class "active", it changes the button's innerHTML to "Go to cart", removes the class
  * "active" from the button, and renders the home page
  */
-const showCart = () => {
-  const btn = document.querySelector(".show-cart");
-  const section = document.querySelector(".product_wrapper");
+const showCartPage = () => {
+  const iconBtn = document.querySelector(".show-cart");
   const productsInCart = JSON.parse(localStorage.getItem("incart"));
-  const { status } = productsProvider;
+  const { cartPage } = productsProvider;
 
-  btn.addEventListener("click", () => {
-    const isactive = btn.classList.contains("active");
-    if (!isactive) {
-      btn.classList.add("active");
-      btn.innerHTML = "Return";
-      section.innerHTML = productsInCart.map((elm) =>
-        renderProduct(elm, status, isInCart(elm))
-      );
-    }
-    if (isactive) {
-      btn.innerHTML = "Go to cart";
-      btn.classList.remove("active");
+  // Check if we are in the cart page already
+  if (cartPage) {
+    const filterSection = document.querySelector(".filter-section");
+    filterSection.style.display = "none";
+
+    const newBtn = document.querySelector(".show-cart");
+    newBtn.classList.add("active");
+    newBtn.innerHTML = "<i class='bx bx-left-arrow-alt bx-sm'></i>Return";
+
+    productsProvider.currPage = 1;
+    // Adding the click event to button
+    iconBtn.addEventListener("click", async () => {
+      productsProvider.cartPage = false;
+
+      productsProvider.status = "loading";
       DomBuilder("#root").load(homePage);
-    }
-  });
+
+      await productsProvider.fecthProducts();
+      DomBuilder("#root").load(homePage);
+    });
+  }
+  // If not we area in the home page
+  else {
+    const newBtn = document.querySelector(".show-cart");
+    newBtn.innerHTML = "Go to Cart<i class='bx bxs-cart bx-sm'></i>";
+    newBtn.classList.remove("active");
+
+    productsProvider.currPage = 1;
+
+    // Adding the click event to button
+    iconBtn.addEventListener("click", () => {
+      productsProvider.products = productsInCart;
+      productsProvider.cartPage = true;
+      DomBuilder("#root").load(homePage);
+    });
+  }
 };
 
-export { addToCart, showCart };
+export { addToCart, showCartPage };

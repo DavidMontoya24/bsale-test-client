@@ -46,6 +46,7 @@ const productsProvider = {
   currPage: 1,
   status: "pending",
   querySearch: "",
+  cartPage: false,
   fecthProducts,
   fetchProductsByCtgry,
   fetchProductsByQuery,

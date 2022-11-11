@@ -43,7 +43,9 @@
 }
 
 .show-cart{
+  display: flex;
   width: 10rem;
+  align-items: center;
 }
 
 .show-cart.active{
@@ -61,7 +63,6 @@ select {
   align-items: center;
   justify-content: center;
   font-weight: 500;
-  /* width: 100%; */
   padding: 0.5rem 2rem;
   min-height: 2rem;
   border-radius: 1rem;

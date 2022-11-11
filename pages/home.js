@@ -9,7 +9,7 @@ import {
   showPagination,
   isInCart,
 } from "./render.js";
-import { addToCart, showCart } from "../components/cart.js";
+import { addToCart, showCartPage } from "../components/cart.js";
 
 // Function that renders and display the Home Page
 const renderHomePage = () => {
@@ -198,7 +198,7 @@ export const homePage = {
     ShowFilters();
     SortBy();
     addToCart();
-    showCart();
+    showCartPage();
     showPagination();
   },
 };
