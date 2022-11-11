@@ -57,11 +57,9 @@ const addToCart = () => {
 };
 
 /**
- * It adds an event listener to the button that shows the cart, and when the button is clicked, it
- * checks if the button has the class "active" and if it doesn't, it adds the class "active" to the
- * button, changes the button's innerHTML to "Return", and renders the products in the cart. If the
- * button has the class "active", it changes the button's innerHTML to "Go to cart", removes the class
- * "active" from the button, and renders the home page
+ * It checks if we are in the cart page or not, and if we are, it adds a click event to the button that
+ * returns us to the home page, and if we are not, it adds a click event to the button that takes us to
+ * the cart page
  */
 const showCartPage = () => {
   const iconBtn = document.querySelector(".show-cart");
@@ -91,6 +89,7 @@ const showCartPage = () => {
   }
   // If not we area in the home page
   else {
+    console.log("bdfauklt");
     const newBtn = document.querySelector(".show-cart");
     newBtn.innerHTML = "Go to Cart<i class='bx bxs-cart bx-sm'></i>";
     newBtn.classList.remove("active");
@@ -99,6 +98,7 @@ const showCartPage = () => {
 
     // Adding the click event to button
     iconBtn.addEventListener("click", () => {
+      if (!productsInCart) return;
       productsProvider.products = productsInCart;
       productsProvider.cartPage = true;
       DomBuilder("#root").load(homePage);

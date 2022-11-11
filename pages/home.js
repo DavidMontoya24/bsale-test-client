@@ -15,6 +15,7 @@ import { addToCart, showCartPage } from "../components/cart.js";
 const renderHomePage = () => {
   const { products, status, currPage } = productsProvider;
   const { categories } = ctgriesProvider;
+  console.log(products);
 
   return `
   ${headerBar}
