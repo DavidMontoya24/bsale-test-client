@@ -353,7 +353,7 @@ option {
     position: absolute;
     border-radius: 2rem 0 0 2rem;
     z-index: 10;
-    right: -300px;
+    /* right: -300px; */
     top: 0;
 
     visibility: hidden;

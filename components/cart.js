@@ -89,7 +89,6 @@ const showCartPage = () => {
   }
   // If not we area in the home page
   else {
-    console.log("bdfauklt");
     const newBtn = document.querySelector(".show-cart");
     newBtn.innerHTML = "Go to Cart<i class='bx bxs-cart bx-sm'></i>";
     newBtn.classList.remove("active");
@@ -98,7 +97,7 @@ const showCartPage = () => {
 
     // Adding the click event to button
     iconBtn.addEventListener("click", () => {
-      if (!productsInCart) return;
+      if (!productsInCart) productsProvider.products = [];
       productsProvider.products = productsInCart;
       productsProvider.cartPage = true;
       DomBuilder("#root").load(homePage);
